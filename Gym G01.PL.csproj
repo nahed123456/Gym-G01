@@ -19,4 +19,8 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GymManagmemnt.BLL\GymManagmemnt.BLL.csproj" />
+  </ItemGroup>
+
 </Project>

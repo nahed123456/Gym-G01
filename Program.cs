@@ -1,3 +1,6 @@
+using GymG01.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 namespace Gym_G01
 {
     public class Program
@@ -10,6 +13,14 @@ namespace Gym_G01
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+            // EF Core Will Create Object From DbContext AUTOMATIC When We Request It From The Contai
+            builder.Services.AddDbContext<GymDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+
 
 
             var app = builder.Build();

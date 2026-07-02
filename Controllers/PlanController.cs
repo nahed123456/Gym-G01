@@ -5,9 +5,16 @@ namespace Gym_G01.Controllers
 {
     public class PlanController : Controller
     {
-        //Database Connection
 
-        private readonly GymDbContext context;
+
+
+        private readonly IPlanRepository _planRepository;
+
+        public PlanController(IPlanRepository planRepository)
+        { 
+             _planRepository= planRepository
+        }
+
 
         public PlanController()
         {
@@ -17,9 +24,9 @@ namespace Gym_G01.Controllers
 
 
         // GET :: BaseUrl/Plan/Index
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var plans = await context.Plans.ToListAsync(); // pass by name
+            var plans = await _planRepository.GetAllAsync(ct: ct);
             return View(plans);
         }
 
@@ -27,7 +34,7 @@ namespace Gym_G01.Controllers
         // GET :: BaseUrl/Plan/Details/{id}
         public async Task<IActionResult> Details(int id, CancellationToken ct)
         {
-            var plan = await content.Plans.FindAsync(id);
+            var plan = await _planRepository.GetByIdAsync(id: ct);
             if (plan == null)
                
                 return RedirectToAction(nameof(Index));
